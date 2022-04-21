@@ -1,0 +1,8 @@
+backend/.idea
+backend/.env
+
+frontend/.angular
+frontend/.vscode
+frontend/node_modules
+
+venv
