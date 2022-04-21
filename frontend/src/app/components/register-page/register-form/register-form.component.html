@@ -1,0 +1,39 @@
+<div>
+    <header>
+        Register!
+    </header>
+    <form>
+        <input 
+        type="text" 
+        placeholder="Pass email"
+        [formControl]="userEmail"
+        >
+        <input 
+        type="text" 
+        placeholder="Pass firstname"
+        [formControl]="userFirstName"
+        >
+        <input 
+        type="text" 
+        placeholder="Pass last name"
+        [formControl]="userLastName"
+        >
+        <input 
+        type="text" 
+        placeholder="Pass password"
+        [formControl]="userPassword"
+        >
+        <input 
+        type="text" 
+        placeholder="Repeat password"
+        [formControl]="userRepeatedPassword"
+        >
+        <span>
+            {{ registerInfo }}
+        </span>
+        <button 
+        (click)="registerUser()">
+            Confirm
+        </button>
+    </form>
+</div>

@@ -1,1 +1,19 @@
-<app-register-page></app-register-page>
+<div class="grid grid-rows-2 text-base grid-flow-col m-0
+md:text-2xl">
+    <a class="nav-div"
+    [routerLink]="['/login']" 
+    routerLinkActive="router-link-active">
+        <span>
+            Login
+        </span>
+    </a>
+    <a class="nav-div"
+    [routerLink]="['/register']" 
+    routerLinkActive="router-link-active">
+        <span>
+            Register
+        </span>
+    </a>
+</div>
+
+<router-outlet></router-outlet>

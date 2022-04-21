@@ -10,7 +10,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  x(): Observable<Object> {
-    return this.http.get(`${environment.backendUrl}/users/register`)
+  registerUser(userData: any): Observable<Object> {
+    return this.http.post(`${environment.backendUrl}/users/register`, userData)
   }
 }

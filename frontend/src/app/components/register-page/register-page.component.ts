@@ -10,10 +10,6 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(private us: UsersService) { }
 
-  ngOnInit(): void {
-    this.us.x().subscribe((res: any) => {
-      console.log(res);
-    })
-  }
+  ngOnInit(): void {  }
 
 }
