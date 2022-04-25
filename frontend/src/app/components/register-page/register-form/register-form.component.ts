@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/usersService/users.service';
 
@@ -20,7 +21,7 @@ export class RegisterFormComponent implements OnInit {
 
   registerInfo : string = "";
 
-  constructor(private us: UsersService) { }
+  constructor(private us: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -45,16 +46,14 @@ export class RegisterFormComponent implements OnInit {
         this.registerInfo = "Passwords aren't the same";
         return
       } else {
-        console.log(this.userFirstName.value);
-        console.log(this.userLastName.value);
-        console.log(this.userEmail.value);
-
         this.us.registerUser(userData).subscribe((res: any) => {
           this.registerInfo = res.message;
-          console.log(res, this.registerInfo);
         })
       }
     }
   }
-  
+
+  redirect(path: string){
+    this.router.navigate([path]);
+  }
 }

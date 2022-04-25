@@ -32,7 +32,7 @@ def register(request):
             })
         else:
             return JsonResponse({"message": "Your email already exists!"})
-        return JsonResponse({"message": dumps(list(collection.find({})), indent=2)})
+        return JsonResponse({"message": "Registered!"})
     except ConnectionError:
         return JsonResponse({"message": "Database problem!"})
 

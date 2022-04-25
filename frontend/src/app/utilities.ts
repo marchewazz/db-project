@@ -3,7 +3,6 @@ const emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-
 const passwordRegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
 export function isDataComplete(data: any) : boolean{
-    console.log(data);
     for (var key in data){
         if (data[key] === "" || data[key] === null) return false
     }

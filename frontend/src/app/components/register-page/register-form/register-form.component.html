@@ -19,17 +19,21 @@
         [formControl]="userLastName"
         >
         <input 
-        type="text" 
+        type="password" 
         placeholder="Pass password"
         [formControl]="userPassword"
         >
         <input 
-        type="text" 
+        type="password" 
         placeholder="Repeat password"
         [formControl]="userRepeatedPassword"
         >
         <span>
             {{ registerInfo }}
+            <button *ngIf="registerInfo === 'Registered!'"
+            (click)="redirect('login')">
+                Login
+            </button>
         </span>
         <button 
         (click)="registerUser()">
