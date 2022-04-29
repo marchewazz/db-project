@@ -20,6 +20,7 @@ export class AuthService {
   checkUserData(): void {
     this.http.post(`${environment.backendUrl}/users/userdata`, { "token": localStorage.getItem("token") }).subscribe((res: any) => {
       if(res.userData) this.isTokenValid = true
+      else localStorage.setItem("token", "")
     })   
   }
 
