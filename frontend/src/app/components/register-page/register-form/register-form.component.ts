@@ -26,7 +26,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  registerUser(){
+  registerUser(): void{
     const userData = {
       accountEmail: this.userEmail.value,
       accountFirstName: this.userFirstName.value,

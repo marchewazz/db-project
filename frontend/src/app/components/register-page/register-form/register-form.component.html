@@ -28,16 +28,18 @@
         placeholder="Repeat password"
         [formControl]="userRepeatedPassword"
         >
-        <span>
-            {{ registerInfo }}
+        <div>
+            <span>
+                {{ registerInfo }}
+            </span>
             <button *ngIf="registerInfo === 'Registered!'"
             (click)="redirect('login')">
                 Login
             </button>
-        </span>
-        <button 
+        </div>
+        <button *ngIf="registerInfo !== 'Registered!'"
         (click)="registerUser()">
-            Confirm
+            Register
         </button>
     </form>
 </div>

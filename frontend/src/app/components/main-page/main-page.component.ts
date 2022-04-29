@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { AuthService } from 'src/app/services/authService/auth.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-main-page',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  @Input() isTokenValid: any;
 
-  ngOnInit(): void {
-  }
+  constructor(private as: AuthService) { }
+
+  ngOnInit(): void { }
 
 }

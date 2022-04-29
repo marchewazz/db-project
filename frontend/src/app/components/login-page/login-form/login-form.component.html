@@ -1,0 +1,26 @@
+<div>
+    <span>
+        Login!
+    </span>
+    <form>
+        <input 
+        type="text" 
+        placeholder="Pass email"
+        [formControl]="userEmail"
+        >
+        <input 
+        type="password" 
+        placeholder="Pass password"
+        [formControl]="userPassword"
+        >
+        <div>
+            <span>
+                {{ loginInfo }}
+            </span>
+            <button 
+            (click)="loginUser()">
+                Login
+            </button>
+        </div>
+    </form>
+</div>
