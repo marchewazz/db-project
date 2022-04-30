@@ -9,24 +9,28 @@
             <img [src]=show.Poster alt="">
         </div>
         <div>
-            <p>
+            <p *ngIf="show.Released">
                 Release date: {{ show.Released }}
             </p>
-            <p>
+            <p *ngIf="show.imdbRating ">
                 Our rating: {{ show.imdbRating }}/10 out of {{ show.imdbVotes }} votes
             </p>
-            <p>
+            <p *ngIf="show.Runtime">
                 Runtime: {{ show.Runtime }}
             </p>
-            <p>
+            <p *ngIf="show.totalSeasons">
+                Total seasons: {{ show.totalSeasons }}
+            </p>
+            <p *ngIf="show.Plot">
                 {{ show.Plot }}
             </p>
             <div>
-                <button class="flex"
+                <button *ngIf="show.Ratings" 
+                class="flex"
                 (click)="showRatings = !showRatings">
                     Ratings
                     <!-- DOWN ARROW -->
-                    <svg *ngIf="!showRatings"
+                    <svg *ngIf="showRatings"
                     xmlns="http://www.w3.org/2000/svg" 
                     class="h-6 w-6" 
                     fill="none" 
@@ -39,8 +43,8 @@
                         d="M19 14l-7 7m0 0l-7-7m7 7V3" 
                         />
                     </svg>
-                    <!-- UP ARROW -->
-                    <svg *ngIf="showRatings"
+                    <!-- RIGHT ARROW -->
+                    <svg *ngIf="!showRatings"
                     xmlns="http://www.w3.org/2000/svg" 
                     class="h-6 w-6" 
                     fill="none" 
@@ -48,10 +52,9 @@
                     stroke="currentColor" 
                     stroke-width="2"
                     >
-                        <path 
-                        stroke-linecap="round" 
+                        <path stroke-linecap="round" 
                         stroke-linejoin="round" 
-                        d="M5 10l7-7m0 0l7 7m-7-7v18" 
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" 
                         />
                     </svg>
                 </button>
@@ -62,22 +65,31 @@
                         </span>
                     </div>
                 </div>
-                <p>
+                <span *ngIf="!show.Ratings">
+                    Not rated yet
+                </span>
+                <p *ngIf="show.Awards">
                     Awards: {{ show.Awards }}
                 </p>
                 <p class="grid grid-flow-row">
-                    <span>
+                    <span *ngIf="show.Actors">
                         Actors: {{ show.Actors }}
                     </span>
-                    <span>
+                    <span *ngIf="show.Director">
                         Directors: {{ show.Director }}
                     </span>
-                    <span>
+                    <span *ngIf="show.Writer">
                         Writers: {{ show.Writer }}
                     </span>
                 </p>
-                <p>
-                    Made in {{ show.Country }} for {{ show.BoxOffice.substring(1) }} {{ show.BoxOffice.charAt(0) }}
+                <p *ngIf="show.Country || show.BoxOffice">
+                    Made 
+                    <span *ngIf="show.Country">
+                        in {{ show.Country }}
+                    </span>
+                    <span *ngIf="show.BoxOffice">
+                        for {{ show.BoxOffice.substring(1) }} {{ show.BoxOffice.charAt(0) }}
+                    </span> 
                 </p>
             </div>
             <button class="bg-green-700">
