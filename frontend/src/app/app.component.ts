@@ -15,9 +15,9 @@ export class AppComponent {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.as.checkUserData()
-        setTimeout(() => {
+        setInterval(() => {
           this.isUserLogged = this.as.isUserLogged()
-        }, 100);
+        }, 1);
       }
     })
   }

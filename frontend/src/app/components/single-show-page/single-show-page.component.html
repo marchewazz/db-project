@@ -1,0 +1,89 @@
+<div>
+    <div>
+        <span class="text-xl">
+            {{ show.Title }}
+        </span>
+    </div>
+    <div class="grid grid-flow-col">
+        <div>
+            <img [src]=show.Poster alt="">
+        </div>
+        <div>
+            <p>
+                Release date: {{ show.Released }}
+            </p>
+            <p>
+                Our rating: {{ show.imdbRating }}/10 out of {{ show.imdbVotes }} votes
+            </p>
+            <p>
+                Runtime: {{ show.Runtime }}
+            </p>
+            <p>
+                {{ show.Plot }}
+            </p>
+            <div>
+                <button class="flex"
+                (click)="showRatings = !showRatings">
+                    Ratings
+                    <!-- DOWN ARROW -->
+                    <svg *ngIf="!showRatings"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="h-6 w-6" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                    >
+                        <path stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                        />
+                    </svg>
+                    <!-- UP ARROW -->
+                    <svg *ngIf="showRatings"
+                    xmlns="http://www.w3.org/2000/svg" 
+                    class="h-6 w-6" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                    >
+                        <path 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        d="M5 10l7-7m0 0l7 7m-7-7v18" 
+                        />
+                    </svg>
+                </button>
+                <div *ngIf="showRatings">
+                    <div *ngFor="let rating of show.Ratings">
+                        <span>
+                            {{ rating.Source }} - {{ rating.Value }}
+                        </span>
+                    </div>
+                </div>
+                <p>
+                    Awards: {{ show.Awards }}
+                </p>
+                <p class="grid grid-flow-row">
+                    <span>
+                        Actors: {{ show.Actors }}
+                    </span>
+                    <span>
+                        Directors: {{ show.Director }}
+                    </span>
+                    <span>
+                        Writers: {{ show.Writer }}
+                    </span>
+                </p>
+                <p>
+                    Made in {{ show.Country }} for {{ show.BoxOffice.substring(1) }} {{ show.BoxOffice.charAt(0) }}
+                </p>
+            </div>
+            <button class="bg-green-700">
+                Borrow
+            </button>
+        </div>
+    </div>
+    
+</div>
