@@ -23,22 +23,26 @@ def register(request):
         collection = db["users"]
 
         accountsWithPassedEmail = list(collection.find({"accountEmail": userData['accountEmail']}))
-        if not accountsWithPassedEmail:
+        accountsWithPassedNick = list(collection.find({"accountNick": userData['accountNick']}))
+
+        if not accountsWithPassedEmail and not accountsWithPassedNick:
             now = datetime.datetime.now()
             collection.insert_one({
                 "accountEmail": userData['accountEmail'],
                 "accountFirstName": userData['accountFirstName'],
                 "accountLastName": userData['accountLastName'],
-                "accountNick": "tset123",
+                "accountNick": userData['accountNick'],
                 "accountCreateDate": now,
                 "accountLastLoginData": now,
                 "accountPassword": hasher.hash(userData['accountPassword']),
                 "tokens": [],
                 "loans": []
             })
-        else:
+            return JsonResponse({"message": "Registered!"})
+        if accountsWithPassedEmail:
             return JsonResponse({"message": "Your email already exists!"})
-        return JsonResponse({"message": "Registered!"})
+        if accountsWithPassedNick:
+            return JsonResponse({"message": "Your nick is taken!"})
     except ConnectionError:
         return JsonResponse({"message": "Database problem!"})
 
