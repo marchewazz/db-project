@@ -29,10 +29,12 @@ def register(request):
                 "accountEmail": userData['accountEmail'],
                 "accountFirstName": userData['accountFirstName'],
                 "accountLastName": userData['accountLastName'],
+                "accountNick": "tset123",
                 "accountCreateDate": now,
                 "accountLastLoginData": now,
                 "accountPassword": hasher.hash(userData['accountPassword']),
-                "tokens": []
+                "tokens": [],
+                "loans": []
             })
         else:
             return JsonResponse({"message": "Your email already exists!"})
@@ -92,6 +94,10 @@ def getUserData(request):
         token = json.loads(request.body)["token"]
         print(token)
         userWithToken = list(collection.find({"tokens.token": token}))
+        if userWithToken:
+            userWithToken = userWithToken[0]
+            userWithToken.pop('accountPassword', None)
+            userWithToken.pop('tokens', None)
 
         return JsonResponse({"userData": dumps(userWithToken, indent=2)})
     except ConnectionError:

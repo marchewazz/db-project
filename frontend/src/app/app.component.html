@@ -1,5 +1,14 @@
 <div class="grid grid-rows-2 text-base grid-flow-col m-0
 md:text-2xl">
+    <div>
+        <a class="nav-div"
+        [routerLink]="['/']" 
+        routerLinkActive="router-link-active">
+            <span>
+                Main page
+            </span>
+        </a> 
+    </div>
     <div *ngIf="!isUserLogged">
         <a class="nav-div"
         [routerLink]="['/login']" 
@@ -17,9 +26,13 @@ md:text-2xl">
         </a>
     </div>
     <div *ngIf="isUserLogged">
-        <p>
-            My profile
-        </p>
+        <a class="nav-div"
+        [routerLink]="['/profile']" 
+        routerLinkActive="router-link-active">
+            <span>
+                My profile
+            </span>
+        </a>
     </div>
 </div>
 
