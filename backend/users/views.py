@@ -35,6 +35,7 @@ def register(request):
                 "accountCreateDate": now,
                 "accountLastLoginData": now,
                 "accountPassword": hasher.hash(userData['accountPassword']),
+                "balance": 10.00,
                 "tokens": [],
                 "loans": []
             })
