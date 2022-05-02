@@ -8,7 +8,7 @@ import { UsersService } from 'src/app/services/usersService/users.service';
 })
 export class RegisterPageComponent implements OnInit {
 
-  constructor(private us: UsersService) { }
+  constructor() { }
 
   ngOnInit(): void {  }
 

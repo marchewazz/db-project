@@ -9,16 +9,37 @@ import { AuthService } from './services/authService/auth.service';
 })
 export class AppComponent {
   title = 'frontend';
+
   isUserLogged: boolean = false;
+  balance: any;
 
   constructor(public router: Router, private as: AuthService){
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.as.checkUserData()
-        setTimeout(() => {
+        setInterval(() => {
           this.isUserLogged = this.as.isUserLogged()
-        }, 100);
+        }, 1);
+        setInterval(() => {
+          if(this.isUserLogged) {
+            this.as.getUserData().subscribe((res: any) => {
+              this.balance = JSON.parse(res.userData).balance
+            })
+          }
+        }, 500)
       }
     })
+  }
+
+  logout() {
+    this.redirect('/');
+    this.as.logout().subscribe((res: any) => {
+      localStorage.setItem("token", "");
+      console.log(res);
+    })
+  }
+
+  redirect(path: string){
+    this.router.navigate([path]);
   }
 }

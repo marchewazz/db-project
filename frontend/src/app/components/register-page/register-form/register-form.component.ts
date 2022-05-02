@@ -16,6 +16,7 @@ export class RegisterFormComponent implements OnInit {
   userEmail: FormControl = new FormControl();
   userFirstName: FormControl = new FormControl();
   userLastName: FormControl = new FormControl();
+  userNick: FormControl = new FormControl();
   userPassword: FormControl = new FormControl();
   userRepeatedPassword: FormControl = new FormControl();
 
@@ -31,6 +32,7 @@ export class RegisterFormComponent implements OnInit {
       accountEmail: this.userEmail.value,
       accountFirstName: this.userFirstName.value,
       accountLastName: this.userLastName.value,
+      accountNick: this.userNick.value,
       accountPassword: this.userPassword.value,
     }
     if(!isDataComplete(userData)){

@@ -17,11 +17,29 @@ export class AuthService {
     return this.http.post(`${environment.backendUrl}/users/login`, userData)
   }
 
+  logout(): Observable<Object> {
+    this.isTokenValid = false;
+    return this.http.post(`${environment.backendUrl}/users/logout`, { "token": localStorage.getItem("token") })  
+  }
+  
   checkUserData(): void {
-    this.http.post(`${environment.backendUrl}/users/userdata`, { "token": localStorage.getItem("token") }).subscribe((res: any) => {
-      if(res.userData) this.isTokenValid = true
-      else localStorage.setItem("token", "")
-    })   
+    if (localStorage.getItem("token")) {
+      this.getUserData().subscribe((res: any) => {
+        console.log(JSON.parse(res.userData));
+        if(JSON.parse(res.userData) != []) this.isTokenValid = true
+        else {
+          this.isTokenValid = true
+          localStorage.setItem("token", "")
+        }
+      })  
+    } else {
+      this.isTokenValid = false
+      localStorage.setItem("token", "")
+    }
+  }
+
+  getUserData(): Observable<Object> {
+    return this.http.post(`${environment.backendUrl}/users/userdata`, { "token": localStorage.getItem("token") })
   }
 
   isUserLogged(): boolean {

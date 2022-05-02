@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/authService/auth.service';
 import { isDataComplete, testEmailRegExp } from 'src/app/utilities';
@@ -16,7 +17,7 @@ export class LoginFormComponent implements OnInit {
 
   loginInfo: string = "";
 
-  constructor(private as: AuthService) { }
+  constructor(private as: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -36,9 +37,16 @@ export class LoginFormComponent implements OnInit {
       } else {
         this.as.loginUser(userData).subscribe((res: any) => {      
           this.loginInfo = res.message;
-          if(res.message === "Valid data!") localStorage.setItem("token", res.token)
+          if(res.message === "Valid data!") {
+            localStorage.setItem("token", res.token)
+            this.redirect('/')
+          }
         })
       }
     }
+  }
+
+  redirect(path: string){
+    this.router.navigate([path]);
   }
 }

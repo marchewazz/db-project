@@ -1,0 +1,22 @@
+<div>
+    <header>
+        Your account
+    </header>
+    <div>
+        <p>
+            Name: {{ userData.accountFirstName }}  {{ userData.accountLastName }}
+        </p>
+        <p>
+            Nick: {{ userData.accountNick }}
+        </p>
+        <p>
+            Email: {{ userData.accountEmail }}
+        </p>
+        <div *ngIf="userData.loans.length">
+            <!-- LOANS HERE -->
+        </div>
+        <div *ngIf="!userData.loans.length">
+            You don't have any loans
+        </div>
+    </div>
+</div>

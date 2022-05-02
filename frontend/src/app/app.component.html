@@ -1,6 +1,15 @@
-<div class="grid grid-rows-2 text-base grid-flow-col m-0
+<div class="grid text-base grid-flow-col m-0
 md:text-2xl">
-    <div *ngIf="!isUserLogged">
+    <div>
+        <a class="nav-div"
+        [routerLink]="['/']" 
+        routerLinkActive="router-link-active">
+            <span>
+                Main page
+            </span>
+        </a> 
+    </div>
+    <ng-container *ngIf="!isUserLogged">
         <a class="nav-div"
         [routerLink]="['/login']" 
         routerLinkActive="router-link-active">
@@ -15,12 +24,22 @@ md:text-2xl">
                 Register
             </span>
         </a>
-    </div>
-    <div *ngIf="isUserLogged">
-        <p>
-            My profile
-        </p>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="isUserLogged">
+        <span class="text-center">
+            Your balance: {{ balance }}$
+        </span>
+        <a class="nav-div"
+        [routerLink]="['/profile']" 
+        routerLinkActive="router-link-active">
+            <span>
+                My profile
+            </span>
+        </a>
+        <button (click)="logout()">
+            Logout
+        </button>
+    </ng-container>
 </div>
 
 <router-outlet></router-outlet>

@@ -23,20 +23,27 @@ def register(request):
         collection = db["users"]
 
         accountsWithPassedEmail = list(collection.find({"accountEmail": userData['accountEmail']}))
-        if not accountsWithPassedEmail:
+        accountsWithPassedNick = list(collection.find({"accountNick": userData['accountNick']}))
+
+        if not accountsWithPassedEmail and not accountsWithPassedNick:
             now = datetime.datetime.now()
             collection.insert_one({
                 "accountEmail": userData['accountEmail'],
                 "accountFirstName": userData['accountFirstName'],
                 "accountLastName": userData['accountLastName'],
+                "accountNick": userData['accountNick'],
                 "accountCreateDate": now,
                 "accountLastLoginData": now,
                 "accountPassword": hasher.hash(userData['accountPassword']),
-                "tokens": []
+                "balance": 10.00,
+                "tokens": [],
+                "loans": []
             })
-        else:
+            return JsonResponse({"message": "Registered!"})
+        if accountsWithPassedEmail:
             return JsonResponse({"message": "Your email already exists!"})
-        return JsonResponse({"message": "Registered!"})
+        if accountsWithPassedNick:
+            return JsonResponse({"message": "Your nick is taken!"})
     except ConnectionError:
         return JsonResponse({"message": "Database problem!"})
 
@@ -82,6 +89,23 @@ def login(request):
         return JsonResponse({"message": "Database problem!"})
 
 @csrf_exempt
+def logout(request):
+
+    try:
+        client = MongoClient(env('MONGO_URL'))
+
+        db = client["app"]
+        collection = db["users"]
+
+        token = json.loads(request.body)["token"]
+
+        collection.update_one({"tokens.token": token}, {"$pull": {"tokens": {"token": token}}})
+
+        return JsonResponse({"message": "Logout!"})
+    except ConnectionError:
+        return JsonResponse({"message": "Database problem!"})
+
+@csrf_exempt
 def getUserData(request):
     try:
         client = MongoClient(env('MONGO_URL'))
@@ -90,8 +114,12 @@ def getUserData(request):
         collection = db["users"]
 
         token = json.loads(request.body)["token"]
-        print(token)
+
         userWithToken = list(collection.find({"tokens.token": token}))
+        if userWithToken:
+            userWithToken = userWithToken[0]
+            userWithToken.pop('accountPassword', None)
+            userWithToken.pop('tokens', None)
 
         return JsonResponse({"userData": dumps(userWithToken, indent=2)})
     except ConnectionError:

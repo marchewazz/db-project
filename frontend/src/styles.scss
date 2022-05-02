@@ -2,3 +2,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "tailwindcss/screens";
+
+@layer components{
+    .nav-div {
+        @apply hover:bg-blue-600 grid justify-center place-items-center
+    }
+}
