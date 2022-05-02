@@ -89,6 +89,23 @@ def login(request):
         return JsonResponse({"message": "Database problem!"})
 
 @csrf_exempt
+def logout(request):
+
+    try:
+        client = MongoClient(env('MONGO_URL'))
+
+        db = client["app"]
+        collection = db["users"]
+
+        token = json.loads(request.body)["token"]
+
+        collection.update_one({"tokens.token": token}, {"$pull": {"tokens": {"token": token}}})
+
+        return JsonResponse({"message": "Logout!"})
+    except ConnectionError:
+        return JsonResponse({"message": "Database problem!"})
+
+@csrf_exempt
 def getUserData(request):
     try:
         client = MongoClient(env('MONGO_URL'))
@@ -97,7 +114,7 @@ def getUserData(request):
         collection = db["users"]
 
         token = json.loads(request.body)["token"]
-        print(token)
+
         userWithToken = list(collection.find({"tokens.token": token}))
         if userWithToken:
             userWithToken = userWithToken[0]

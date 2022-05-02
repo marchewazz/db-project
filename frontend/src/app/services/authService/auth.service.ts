@@ -17,6 +17,11 @@ export class AuthService {
     return this.http.post(`${environment.backendUrl}/users/login`, userData)
   }
 
+  logout(): Observable<Object> {
+    this.isTokenValid = false;
+    return this.http.post(`${environment.backendUrl}/users/logout`, { "token": localStorage.getItem("token") })  
+  }
+  
   checkUserData(): void {
     if (localStorage.getItem("token")) {
       this.getUserData().subscribe((res: any) => {

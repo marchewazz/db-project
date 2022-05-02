@@ -1,4 +1,4 @@
-<div class="grid grid-rows-2 text-base grid-flow-col m-0
+<div class="grid text-base grid-flow-col m-0
 md:text-2xl">
     <div>
         <a class="nav-div"
@@ -9,7 +9,7 @@ md:text-2xl">
             </span>
         </a> 
     </div>
-    <div *ngIf="!isUserLogged">
+    <ng-container *ngIf="!isUserLogged">
         <a class="nav-div"
         [routerLink]="['/login']" 
         routerLinkActive="router-link-active">
@@ -24,8 +24,11 @@ md:text-2xl">
                 Register
             </span>
         </a>
-    </div>
-    <div *ngIf="isUserLogged">
+    </ng-container>
+    <ng-container *ngIf="isUserLogged">
+        <span class="text-center">
+            Your balance: {{ balance }}$
+        </span>
         <a class="nav-div"
         [routerLink]="['/profile']" 
         routerLinkActive="router-link-active">
@@ -33,7 +36,10 @@ md:text-2xl">
                 My profile
             </span>
         </a>
-    </div>
+        <button (click)="logout()">
+            Logout
+        </button>
+    </ng-container>
 </div>
 
 <router-outlet></router-outlet>
