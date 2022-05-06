@@ -7,4 +7,10 @@
     .nav-div {
         @apply hover:bg-blue-600 grid justify-center place-items-center
     }
+    .success-info {
+        @apply bg-green-200 border-green-700
+    }
+    .fail-info {
+        @apply bg-red-200 border-red-700
+    }
 }
