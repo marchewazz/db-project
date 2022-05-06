@@ -92,9 +92,28 @@
                     </span> 
                 </p>
             </div>
-            <button class="bg-green-700">
-                Borrow
-            </button>
+            <div *ngIf="isUserLogged"
+            class="grid grid-rows-2 grid-flow-row">
+                <span class="text-center"
+                [ngClass]="{'bg-white': !loanInfo, 'success-info': loanInfo==='Loaned!', 'fail-info': loanInfo!=='Loaned!', 'border-2': loanInfo!==''}"
+                >
+                    {{ loanInfo }}
+                </span>
+                <div class="flex justify-evenly">
+                    <button class="bg-green-700"
+                    (click)="loan(show.imdbID, 'month')">
+                        Loan for a month
+                    </button>
+                    <button class="bg-green-700"
+                    (click)="loan(show.imdbID, 'week')">
+                        Loan for a week
+                    </button>
+                </div>
+                
+            </div>
+            <div *ngIf="!isUserLogged">
+                You need to be logged to loan this show
+            </div>
         </div>
     </div>
     
