@@ -40,10 +40,16 @@
                     Your eariler loans
                 </header>
                 <div *ngFor="let loan of earlierLoans">
-                    <button (click)="redirect(createPath('/show/', loan.showID))">
-                        {{ loan.showTitle }}
-                        <img class="scale-75" [src]=loan.showPoster alt="">
-                    </button>
+                    <div class="flex items-center justify-center">
+                        <figure class="relative max-w-xs cursor-pointer">
+                            <button (click)="redirect(createPath('/show/', loan.showID))">
+                                <img class="" [src]=loan.showPoster alt="" title="sdafs">
+                                <figcaption class="absolute text-lg -mt-10 text-black px-4">
+                                    {{ loan.showTitle }}
+                                </figcaption>    
+                            </button>
+                        </figure>
+                    </div>
                     Loaned on: {{ createDateFormat(loan.loanStartDate.$date) }}
                     Ended on: {{ createDateFormat(loan.loanEndDate.$date) }}
                 </div>
