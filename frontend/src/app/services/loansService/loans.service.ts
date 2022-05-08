@@ -13,4 +13,9 @@ export class LoansService {
   loan(loanData: any): Observable<Object> {
     return this.http.post(`${environment.backendUrl}/loans/loan`, loanData)
   }
+
+  extendLoan(loanData: any): Observable<Object> {
+    return this.http.post(`${environment.backendUrl}/loans/extendloan`, loanData)
+
+  }
 }
