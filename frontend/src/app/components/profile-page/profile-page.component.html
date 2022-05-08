@@ -17,19 +17,43 @@
                 <header>
                     Your active loans
                 </header>
-                <div *ngFor="let loan of activeLoans">
+                <span class="text-center"
+                [ngClass]="{'bg-white': !loanInfo, 'success-info': loanInfo==='Loan extended!', 'fail-info': loanInfo!=='Loan extended!', 'border-2': loanInfo!==''}"
+                >
+                    {{ loanInfo }}
+                </span>
+                <div class="grid grid-cols-2 grid-flow-col"
+                *ngFor="let loan of activeLoans">
                     <div class="flex items-center justify-center">
                         <figure class="relative max-w-xs cursor-pointer">
                             <button (click)="redirect(createPath('/show/', loan.showID))">
-                                <img class="" [src]=loan.showPoster alt="" title="sdafs">
-                                <figcaption class="absolute text-lg -mt-10 text-black px-4">
+                                <img class="w-8/12 h-4/6" [src]=loan.showPoster alt="" title="sdafs">
+                                <figcaption class="absolute text-lg -mt-10 text-white px-4">
                                     {{ loan.showTitle }}
                                 </figcaption>    
                             </button>
                         </figure>
                     </div>
-                    Loaned on: {{ createDateFormat(loan.loanStartDate.$date) }}
-                    Ends on: {{ createDateFormat(loan.loanEndDate.$date) }}
+                    <div class="grid content-around">
+                        <span>
+                            Loaned on: {{ createDateFormat(loan.loanStartDate.$date) }}
+                        </span>
+                        <span>
+                            Ends on: {{ createDateFormat(loan.loanEndDate.$date) }}
+                        </span>
+                        <div>
+                            
+                            <div class="flex justify-evenly">
+                                <button (click)="extendLoan(loan.loanID, 'week')">
+                                    Extend loan by a week for {{ enviroment.extendWeekPrice }}$
+                                </button>
+                                <button (click)="extendLoan(loan.loanID, 'month')">
+                                    Extend loan by a month {{ enviroment.extendMonthPrice }}$
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             <div *ngIf="!activeLoans.length">
@@ -43,8 +67,8 @@
                     <div class="flex items-center justify-center">
                         <figure class="relative max-w-xs cursor-pointer">
                             <button (click)="redirect(createPath('/show/', loan.showID))">
-                                <img class="" [src]=loan.showPoster alt="" title="sdafs">
-                                <figcaption class="absolute text-lg -mt-10 text-black px-4">
+                                <img class="" [src]=loan.showPoster alt="">
+                                <figcaption class="absolute text-lg -mt-10 text-white px-4">
                                     {{ loan.showTitle }}
                                 </figcaption>    
                             </button>

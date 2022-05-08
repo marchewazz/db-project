@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { environment } from 'src/environments/environment.prod';
+
 import { AuthService } from 'src/app/services/authService/auth.service';
 import { ShowsService } from 'src/app/services/showsService/shows.service';
+import { LoansService } from 'src/app/services/loansService/loans.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -16,7 +19,11 @@ export class ProfilePageComponent implements OnInit {
   activeLoans: any = [];
   earlierLoans: any = [];
 
-  constructor(private router: Router, private as: AuthService, private ss: ShowsService) { }
+  loanInfo: string = "";
+
+  enviroment = environment;
+
+  constructor(private router: Router, private as: AuthService, private ss: ShowsService, private ls: LoansService) { }
 
   ngOnInit(): void {
     this.as.getUserData().subscribe((res: any) => {
@@ -37,6 +44,18 @@ export class ProfilePageComponent implements OnInit {
           loan.showPoster = show.Poster
         })
       }
+    })
+  }
+
+  extendLoan(loanID: string, duration: string){
+    const loanData = {
+      "loanID": loanID,
+      "duration": duration,
+      "price": duration === "week" ? environment.extendWeekPrice : environment.extendMonthPrice,
+      "accountNick": this.userData.accountNick
+    }
+    this.ls.extendLoan(loanData).subscribe((res: any) => {
+      this.loanInfo = res.message
     })
   }
 
