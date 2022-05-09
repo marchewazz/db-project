@@ -25,7 +25,6 @@ export class AuthService {
   checkUserData(): void {
     if (localStorage.getItem("token")) {
       this.getUserData().subscribe((res: any) => {
-        console.log(JSON.parse(res.userData));
         if(JSON.parse(res.userData) != []) this.isTokenValid = true
         else {
           this.isTokenValid = true

@@ -99,7 +99,8 @@
                 >
                     {{ loanInfo }}
                 </span>
-                <div class="flex justify-evenly">
+                <div *ngIf="!isShowLoaned" 
+                class="flex justify-evenly">
                     <button class="bg-green-700"
                     (click)="loan(show.imdbID, 'month')">
                         Loan for a month
@@ -108,6 +109,12 @@
                     (click)="loan(show.imdbID, 'week')">
                         Loan for a week
                     </button>
+                </div>
+                <div *ngIf="isShowLoaned" 
+                class="flex justify-evenly">
+                    <span>
+                        You already have this show
+                    </span>
                 </div>
                 
             </div>

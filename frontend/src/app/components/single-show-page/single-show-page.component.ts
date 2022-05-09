@@ -17,9 +17,11 @@ export class SingleShowPageComponent implements OnInit {
   showRatings: boolean = false;
 
   loanInfo: string = "";
+  isShowLoaned: boolean = false;
 
   isUserLogged: boolean = false;
   
+  enviroment = environment;
 
   constructor(private route: ActivatedRoute, private ss: ShowsService, private as: AuthService, private ls: LoansService) { }
 
@@ -29,10 +31,15 @@ export class SingleShowPageComponent implements OnInit {
     }
     this.ss.getOneShow(showData).subscribe((res: any) => {
       this.show = JSON.parse(res.show);
-      console.log(this.show);
       setInterval(() => {
         this.isUserLogged = this.as.isUserLogged();
-      }, 1000)
+        if(this.isUserLogged) {
+          this.as.getUserData().subscribe((res: any) => {
+            const loans = JSON.parse(res.userData).loans;
+            if(loans.filter((loan: any) => loan.showID === showData.showID && loan.state === "active").length) this.isShowLoaned = true;
+          })
+        }
+      }, 250)
     })
   }
   loan(showID: string, duration: string) {
