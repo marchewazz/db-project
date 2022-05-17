@@ -15,8 +15,10 @@ environ.Env.read_env()
 
 @csrf_exempt
 def register(request):
+    def randomWord(length):
+        letters = "1234567890abcdefghijklmnoprstuwyxzABCDEFGHIJKLMNOPRSTUWYXZ!@#$%^&*()_-+="
+        return ''.join(random.choice(letters) for i in range(length))
     userData = json.loads(request.body)
-    print(userData)
     try:
         client = MongoClient(env('MONGO_URL'))
         db = client["app"]
@@ -26,8 +28,13 @@ def register(request):
         accountsWithPassedNick = list(collection.find({"accountNick": userData['accountNick']}))
 
         if not accountsWithPassedEmail and not accountsWithPassedNick:
+            while True:
+                accountID = randomWord(12)
+                if len(list(collection.find({"accountID": accountID}))) == 0: break
+
             now = datetime.datetime.now()
             collection.insert_one({
+                "accountID": accountID,
                 "accountEmail": userData['accountEmail'],
                 "accountFirstName": userData['accountFirstName'],
                 "accountLastName": userData['accountLastName'],
@@ -37,7 +44,9 @@ def register(request):
                 "accountPassword": hasher.hash(userData['accountPassword']),
                 "balance": 10.00,
                 "tokens": [],
-                "loans": []
+                "loans": [],
+                "friends": [],
+                "invitations": []
             })
             return JsonResponse({"message": "Registered!"})
         if accountsWithPassedEmail:
