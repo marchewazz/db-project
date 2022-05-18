@@ -12,6 +12,7 @@ import { RegisterFormComponent } from './components/register-page/register-form/
 import { LoginFormComponent } from './components/login-page/login-form/login-form.component';
 import { SingleShowPageComponent } from './components/single-show-page/single-show-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { FriendPageComponent } from './components/friend-page/friend-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
     LoginFormComponent,
     SingleShowPageComponent,
     ProfilePageComponent,
+    FriendPageComponent,
   ],
   imports: [
     BrowserModule,

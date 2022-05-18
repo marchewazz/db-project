@@ -6,6 +6,7 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SingleShowPageComponent } from './components/single-show-page/single-show-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { FriendPageComponent } from './components/friend-page/friend-page.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: 'show/:id', component: SingleShowPageComponent},
   { path: 'myprofile', component: ProfilePageComponent},
+  { path: 'profile/:id', component: FriendPageComponent},
 ];
 
 @NgModule({

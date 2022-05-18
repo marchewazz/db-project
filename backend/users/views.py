@@ -16,7 +16,7 @@ environ.Env.read_env()
 @csrf_exempt
 def register(request):
     def randomWord(length):
-        letters = "1234567890abcdefghijklmnoprstuwyxzABCDEFGHIJKLMNOPRSTUWYXZ!@#$%^&*()_-+="
+        letters = "1234567890abcdefghijklmnoprstuwyxzABCDEFGHIJKLMNOPRSTUWYXZ"
         return ''.join(random.choice(letters) for i in range(length))
     userData = json.loads(request.body)
     try:

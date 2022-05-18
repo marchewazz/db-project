@@ -1,0 +1,34 @@
+<div>
+    <p>
+        {{ userData.accountNick }}
+    </p>
+    <div>
+        <ng-container *ngIf="isUserLogged">
+            <ng-container *ngIf="isUserFriend">
+                <button>
+                    Delete friend
+                </button>
+            </ng-container>
+            <ng-container *ngIf="!isUserFriend">
+                <ng-container *ngIf="isInvitationReceived">
+                    Answer
+                </ng-container>
+                <ng-container *ngIf="!isInvitationReceived">
+                    <ng-container *ngIf="isInvitationSend">
+                        <button (click)="cancelInvitation(userData.accountID)">
+                            Cancel invitation
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="!isInvitationSend">
+                        <button (click)="sendInvitation(userData.accountID)">
+                            Send invitation
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!isUserLogged">
+            You need to be logged to add friends
+        </ng-container>
+    </div>
+</div>

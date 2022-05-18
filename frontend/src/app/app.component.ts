@@ -26,7 +26,7 @@ export class AppComponent {
               this.balance = JSON.parse(res.userData).balance
             })
           }
-        }, 500)
+        }, 1000)
       }
     })
   }
