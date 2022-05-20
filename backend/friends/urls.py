@@ -6,4 +6,5 @@ urlpatterns = [
     path('getuserdata', views.getUserData, name='getUserData'),
     path('sendinvitation', views.sendInvitation, name='sendInvitation'),
     path('cancelinvitation', views.cancelInvitation, name='cancelInvitation'),
+    path('answerinvitation', views.answerInvitation, name='answerInvitation'),
 ]

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.prod';
 import { AuthService } from 'src/app/services/authService/auth.service';
 import { ShowsService } from 'src/app/services/showsService/shows.service';
 import { LoansService } from 'src/app/services/loansService/loans.service';
+import { FriendsService } from 'src/app/services/friendsService/friends.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -23,11 +24,23 @@ export class ProfilePageComponent implements OnInit {
 
   enviroment = environment;
 
-  constructor(private router: Router, private as: AuthService, private ss: ShowsService, private ls: LoansService) { }
+  constructor(private router: Router, private as: AuthService, private ss: ShowsService, private ls: LoansService, private fs: FriendsService) { }
 
   ngOnInit(): void {
     this.as.getUserData().subscribe((res: any) => {
-      this.userData = JSON.parse(res.userData);      
+      this.userData = JSON.parse(res.userData);     
+      for (let i = 0; i < this.userData.friends.length; i++) {
+        this.fs.getUserData(this.userData.friends[i].friendID).subscribe((res: any) => {
+          this.userData.friends[i] = Object.assign(this.userData.friends[i], res.userData)
+        })
+      } 
+      for (let i = 0; i < this.userData.invitations.length; i++) {
+        this.fs.getUserData(this.userData.invitations[i].senderID).subscribe((res: any) => {        
+          this.userData.invitations[i] = Object.assign(this.userData.invitations[i], { senderFirstName: JSON.parse(res.userData).accountFirstName, senderNick: JSON.parse(res.userData).accountNick })
+          console.log(this.userData.invitations[i]);
+          
+        })
+      }
       this.activeLoans = this.userData.loans.filter((loan: any) =>  loan.state === "active");
       this.earlierLoans = this.userData.loans.filter((loan: any) =>  loan.state === "expired");
       for(const loan of this.activeLoans){
@@ -56,6 +69,12 @@ export class ProfilePageComponent implements OnInit {
     }
     this.ls.extendLoan(loanData).subscribe((res: any) => {
       this.loanInfo = res.message
+    })
+  }
+
+  answerInvitation(senderID: string, answer: string) {
+    this.fs.answerInvitation({"senderID": senderID, "receiverID": this.userData.accountID, answer: answer}).subscribe((res: any) => {
+      console.log(res);
     })
   }
 

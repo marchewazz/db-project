@@ -85,3 +85,46 @@ def cancelInvitation(request):
         return JsonResponse({"message": "Database problem!"})
 
 
+@csrf_exempt
+def answerInvitation(request):
+    try:
+
+        client = MongoClient(env('MONGO_URL'))
+
+        db = client["app"]
+        collection = db["users"]
+
+        invitationData = json.loads(request.body)
+
+        with client.start_session() as session:
+            with session.start_transaction():
+                if invitationData['answer'] == "decline":
+                    collection.update_one({"accountID": invitationData["receiverID"]},
+                                          {"$pull": {"invitations": {
+                                              "senderID": invitationData["senderID"]
+                                          }}},
+                                          session=session)
+
+                    session.commit_transaction()
+
+                    return JsonResponse({"message": "Invitation declined!"})
+
+                if invitationData['answer'] == "accept":
+                    collection.update_one({"accountID": invitationData["receiverID"]},
+                                          {"$pull": {"invitations": {
+                                              "senderID": invitationData["senderID"]
+                                          }}},
+                                          session=session)
+                    collection.update_one({"accountID": invitationData["receiverID"]},
+                                          {"$push": {"friends": {
+                                              "senderID": invitationData["senderID"],
+                                              "addDate": datetime.datetime.now()
+                                          }}},
+                                          session=session)
+
+                    session.commit_transaction()
+
+                    return JsonResponse({"message": "Friend added!"})
+
+    except ConnectionError:
+        return JsonResponse({"message": "Database problem!"})
