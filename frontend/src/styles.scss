@@ -13,4 +13,7 @@
     .fail-info {
         @apply bg-red-200 border-red-700
     }
+    .active-tab-style {
+        @apply bg-black text-white
+    }
 }

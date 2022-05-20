@@ -13,49 +13,97 @@
             Email: {{ userData.accountEmail }}
         </p>
         <div>
-            <ng-container *ngIf="!userData.invitations.length">
-                <span>
-                    You don't have any invitations
-                </span>
-            </ng-container>
-            <ng-container *ngIf="userData.invitations.length">
-                <div *ngFor="let invitation of userData.invitations">
-                    <span>
-                        Invitation from {{ invitation.senderFirstName }} ({{ invitation.senderNick }})
-                        <span>
-                            <button (click)="answerInvitation(invitation.senderID, 'accept')" 
-                            class="bg-green-700 text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                class="h-6 w-6" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                stroke="currentColor" 
-                                stroke-width="2"
-                                >
-                                    <path stroke-linecap="round" 
-                                    stroke-linejoin="round" 
-                                    d="M5 13l4 4L19 7" 
-                                    />
-                                </svg>
-                            </button>
-                            <button (click)="answerInvitation(invitation.senderID, 'decline')" 
-                            class="bg-red-700 text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                class="h-6 w-6" 
-                                fill="none" 
-                                viewBox="0 0 24 24" 
-                                stroke="currentColor" 
-                                stroke-width="2"
-                                >
-                                    <path stroke-linecap="round" 
-                                    stroke-linejoin="round" 
-                                    d="M6 18L18 6M6 6l12 12" 
-                                    />
-                                </svg>
-                            </button>
-                        </span>
-                    </span>
+            <div class="grid">
+                <header class="place-self-center">
+                    Community
+                </header>
+                <div class="grid grid-flow-col">
+                    <button (click)="communityTab='friends'"
+                    [ngClass]="{'active-tab-style': communityTab=='friends'}">
+                        Friends
+                    </button>
+                    <button (click)="communityTab='invitations'"
+                    [ngClass]="{'active-tab-style': communityTab=='invitations'}">
+                        Invitations
+                    </button>
                 </div>
+            </div>
+            <ng-container *ngIf="communityTab=='friends'">
+                <ng-container *ngIf="!userData.friends.length">
+                    <span>
+                        You don't have any friends
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="userData.friends.length">
+                    <div *ngFor="let friend of userData.friends">
+                        <span (click)="redirect(createPath('/profile/', friend.friendID))">
+                            {{ friend.friendFirstName }}({{ friend.friendNick}})
+                        </span>
+                        <button (click)="deleteFriend(friend.friendID)" 
+                        class="bg-red-700 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                            class="h-6 w-6" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor" 
+                            stroke-width="2"
+                            >
+                                <path stroke-linecap="round" 
+                                stroke-linejoin="round" 
+                                d="M6 18L18 6M6 6l12 12" 
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="communityTab=='invitations'">
+                <ng-container *ngIf="!userData.invitations.length">
+                    <span>
+                        You don't have any invitations
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="userData.invitations.length">
+                    <div *ngFor="let invitation of userData.invitations">
+                        <span>
+                            <span (click)="redirect(createPath('/profile/', invitation.senderID))">
+                                Invitation from {{ invitation.senderFirstName }} ({{ invitation.senderNick }})
+                            </span>
+                            <span>
+                                <button (click)="answerInvitation(invitation.senderID, 'accept')" 
+                                class="bg-green-700 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    class="h-6 w-6" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24" 
+                                    stroke="currentColor" 
+                                    stroke-width="2"
+                                    >
+                                        <path stroke-linecap="round" 
+                                        stroke-linejoin="round" 
+                                        d="M5 13l4 4L19 7" 
+                                        />
+                                    </svg>
+                                </button>
+                                <button (click)="answerInvitation(invitation.senderID, 'decline')" 
+                                class="bg-red-700 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                    class="h-6 w-6" 
+                                    fill="none" 
+                                    viewBox="0 0 24 24" 
+                                    stroke="currentColor" 
+                                    stroke-width="2"
+                                    >
+                                        <path stroke-linecap="round" 
+                                        stroke-linejoin="round" 
+                                        d="M6 18L18 6M6 6l12 12" 
+                                        />
+                                    </svg>
+                                </button>
+                            </span>
+                        </span>
+                    </div>
+                </ng-container>
             </ng-container>
         </div>
         <div *ngIf="userData.loans.length">

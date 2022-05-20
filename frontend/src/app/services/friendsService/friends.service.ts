@@ -25,4 +25,8 @@ export class FriendsService {
   answerInvitation(invitationData: any): Observable<Object> {
     return this.http.post(`${environment.backendUrl}/friends/answerinvitation`, invitationData)
   }
+
+  deleteFriend(invitationData: any): Observable<Object> {
+    return this.http.post(`${environment.backendUrl}/friends/deletefriend`, invitationData)
+  }
 }

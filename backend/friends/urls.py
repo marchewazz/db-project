@@ -7,4 +7,5 @@ urlpatterns = [
     path('sendinvitation', views.sendInvitation, name='sendInvitation'),
     path('cancelinvitation', views.cancelInvitation, name='cancelInvitation'),
     path('answerinvitation', views.answerInvitation, name='answerInvitation'),
+    path('deletefriend', views.deleteFriend, name='deleteFriend'),
 ]

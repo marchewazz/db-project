@@ -22,6 +22,8 @@ export class ProfilePageComponent implements OnInit {
 
   loanInfo: string = "";
 
+  communityTab: string = "friends"
+
   enviroment = environment;
 
   constructor(private router: Router, private as: AuthService, private ss: ShowsService, private ls: LoansService, private fs: FriendsService) { }
@@ -31,7 +33,7 @@ export class ProfilePageComponent implements OnInit {
       this.userData = JSON.parse(res.userData);     
       for (let i = 0; i < this.userData.friends.length; i++) {
         this.fs.getUserData(this.userData.friends[i].friendID).subscribe((res: any) => {
-          this.userData.friends[i] = Object.assign(this.userData.friends[i], res.userData)
+          this.userData.friends[i] = Object.assign(this.userData.friends[i], { friendFirstName: JSON.parse(res.userData).accountFirstName, friendNick: JSON.parse(res.userData).accountNick })
         })
       } 
       for (let i = 0; i < this.userData.invitations.length; i++) {
@@ -74,6 +76,12 @@ export class ProfilePageComponent implements OnInit {
 
   answerInvitation(senderID: string, answer: string) {
     this.fs.answerInvitation({"senderID": senderID, "receiverID": this.userData.accountID, answer: answer}).subscribe((res: any) => {
+      console.log(res);
+    })
+  }
+
+  deleteFriend(friendID: string) {
+    this.fs.deleteFriend({ user1ID: this.userData.accountID, user2ID: friendID }).subscribe((res: any) => {
       console.log(res);
     })
   }

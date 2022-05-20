@@ -117,8 +117,45 @@ def answerInvitation(request):
                                           session=session)
                     collection.update_one({"accountID": invitationData["receiverID"]},
                                           {"$push": {"friends": {
-                                              "senderID": invitationData["senderID"],
+                                              "friendID": invitationData["senderID"],
                                               "addDate": datetime.datetime.now()
+                                          }}},
+                                          session=session)
+                    collection.update_one({"accountID": invitationData["senderID"]},
+                                          {"$push": {"friends": {
+                                              "friendID": invitationData["receiverID"],
+                                              "addDate": datetime.datetime.now()
+                                          }}},
+                                          session=session)
+
+                    session.commit_transaction()
+
+                    return JsonResponse({"message": "Friend added!"})
+
+    except ConnectionError:
+        return JsonResponse({"message": "Database problem!"})\
+
+@csrf_exempt
+def deleteFriend(request):
+    try:
+
+        client = MongoClient(env('MONGO_URL'))
+
+        db = client["app"]
+        collection = db["users"]
+
+        invitationData = json.loads(request.body)
+
+        with client.start_session() as session:
+            with session.start_transaction():
+                    collection.update_one({"accountID": invitationData["user1ID"]},
+                                          {"$pull": {"friends": {
+                                              "friendID": invitationData["user2ID"],
+                                          }}},
+                                          session=session)
+                    collection.update_one({"accountID": invitationData["user2ID"]},
+                                          {"$pull": {"friends": {
+                                              "friendID": invitationData["user1ID"],
                                           }}},
                                           session=session)
 
