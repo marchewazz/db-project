@@ -1,0 +1,38 @@
+<div>
+    <span>
+        Results for "{{ phrase }}"
+    </span>
+    <div class="grid grid-flow-col place-items-stretch">
+        <button (click)="resultsTab='shows'"
+        [ngClass]="{'active-tab-style': resultsTab=='shows'}">
+            Shows
+        </button>
+        <button (click)="resultsTab='users'"
+        [ngClass]="{'active-tab-style': resultsTab=='users'}">
+            Users
+        </button>
+    </div>
+    <div>
+        <ng-container *ngIf="resultsTab=='shows'">
+            <span *ngIf="!showsResults.length">
+                No shows found
+            </span>
+            <ng-container *ngIf="showsResults.length">
+                <ng-container *ngFor="let show of showsResults">
+                    <app-show-tile [showData]="show"></app-show-tile>
+                </ng-container>
+            </ng-container>
+            
+        </ng-container>
+        <ng-container *ngIf="resultsTab=='users'">
+            <span *ngIf="!usersResults.length">
+                No users found
+            </span>
+            <ng-container *ngIf="usersResults.length">
+                <div *ngFor="let user of usersResults">
+                    {{ user.accountNick }}
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

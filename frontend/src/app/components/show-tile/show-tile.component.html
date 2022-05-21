@@ -1,0 +1,10 @@
+<div class="flex items-center justify-center">
+    <figure class="relative max-w-xs cursor-pointer">
+        <button (click)="redirect(createPath('/show/', showData.imdbID))">
+            <img class="w-8/12 h-4/6" [src]=showData.Poster alt="">
+            <figcaption class="absolute text-lg -mt-10 text-white px-4">
+                {{ showData.Title }}
+            </figcaption>    
+        </button>
+    </figure>
+</div>

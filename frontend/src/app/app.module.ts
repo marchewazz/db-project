@@ -13,6 +13,9 @@ import { LoginFormComponent } from './components/login-page/login-form/login-for
 import { SingleShowPageComponent } from './components/single-show-page/single-show-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { FriendPageComponent } from './components/friend-page/friend-page.component';
+import { SearchToolComponent } from './components/search-tool/search-tool.component';
+import { SearchResultsPageComponent } from './components/search-results-page/search-results-page.component';
+import { ShowTileComponent } from './components/show-tile/show-tile.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { FriendPageComponent } from './components/friend-page/friend-page.compon
     SingleShowPageComponent,
     ProfilePageComponent,
     FriendPageComponent,
+    SearchToolComponent,
+    SearchResultsPageComponent,
+    ShowTileComponent,
   ],
   imports: [
     BrowserModule,
