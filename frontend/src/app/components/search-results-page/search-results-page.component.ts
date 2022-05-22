@@ -25,9 +25,6 @@ export class SearchResultsPageComponent implements OnInit {
       console.log(res);
       this.showsResults = JSON.parse(res.showsResults).Search;
       this.usersResults = JSON.parse(res.usersResults);
-      console.log(this.showsResults);
-      console.log(this.usersResults);
-      
     })
   }
 

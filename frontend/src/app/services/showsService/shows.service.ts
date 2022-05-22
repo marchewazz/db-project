@@ -10,7 +10,15 @@ export class ShowsService {
 
   constructor(private http: HttpClient) { }
 
-  getOneShow(showData: any){
+  getOneShow(showData: any): Observable<Object>{
     return this.http.post(`${environment.backendUrl}/shows/getone`, showData)
+  }
+
+  getSeason(showData: any): Observable<Object>{
+    return this.http.post(`${environment.backendUrl}/shows/getseason`, showData)
+  }
+
+  getEpisode(showData: any): Observable<Object>{
+    return this.http.post(`${environment.backendUrl}/shows/getepisode`, showData)
   }
 }

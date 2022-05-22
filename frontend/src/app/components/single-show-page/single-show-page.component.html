@@ -123,5 +123,27 @@
             </div>
         </div>
     </div>
-    
+    <div *ngIf="show.Type=='series'">
+        <span>
+            Seasons
+        </span>
+        <div>
+            <div class="grid grid-flow-col place-items-stretch">
+                <button *ngFor="let x of [].constructor(createNumber(show.totalSeasons)); let season = index"
+                (click)="seasonNumber=season+1; updateEpisodes()"
+                [ngClass]="{'active-tab-style': seasonNumber==season+1}">
+                    {{ season+1 }}
+                </button>
+            </div>
+            
+            <div>
+                <div *ngFor="let episode of seasonEpisodes">
+                    <button (click)="redirect(createPath('/show/', episode.imdbID))">
+                        {{ episode.Title }}
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
