@@ -31,4 +31,12 @@
             You need to be logged to add friends
         </ng-container>
     </div>
+    <div *ngIf="isUserLogged">
+        <span *ngIf="!isUserFriend">
+            You need to be friends to compare your loans
+        </span>
+        <div *ngIf="isUserFriend">
+            Here's gonna be smth
+        </div>
+    </div>
 </div>

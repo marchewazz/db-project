@@ -8,4 +8,5 @@ urlpatterns = [
     path('cancelinvitation', views.cancelInvitation, name='cancelInvitation'),
     path('answerinvitation', views.answerInvitation, name='answerInvitation'),
     path('deletefriend', views.deleteFriend, name='deleteFriend'),
+    path('compareloanswithfriend', views.compareLoansWithFriend, name='compareloanswithfriend'),
 ]

@@ -28,6 +28,8 @@ export class FriendPageComponent implements OnInit {
         this.isUserLogged = this.as.isUserLogged();
         if(this.isUserLogged) {
           this.as.getUserData().subscribe((res: any) => {
+            console.log(JSON.parse(res.userData));
+            
             if(JSON.parse(res.userData).accountID === this.userData.accountID) this.redirect('/myprofile')
 
             if(JSON.parse(res.userData).friends.filter((friend: any) => friend.friendID === this.route.snapshot.paramMap.get('id')).length) this.isUserFriend = true
@@ -40,6 +42,10 @@ export class FriendPageComponent implements OnInit {
             else this.isInvitationReceived = false
             
             console.log(this.isInvitationSend);
+
+            this.fs.compareLoansWithFriend({"userID": JSON.parse(res.userData).accountID, "friendID": this.userData.accountID}).subscribe((res: any) => {
+              console.log(res);
+            })
           })
         }
       }

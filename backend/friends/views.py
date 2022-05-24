@@ -133,7 +133,7 @@ def answerInvitation(request):
                     return JsonResponse({"message": "Friend added!"})
 
     except ConnectionError:
-        return JsonResponse({"message": "Database problem!"})\
+        return JsonResponse({"message": "Database problem!"})
 
 @csrf_exempt
 def deleteFriend(request):
@@ -162,6 +162,40 @@ def deleteFriend(request):
                     session.commit_transaction()
 
                     return JsonResponse({"message": "Friend added!"})
+
+    except ConnectionError:
+        return JsonResponse({"message": "Database problem!"})
+
+
+@csrf_exempt
+def compareLoansWithFriend(request):
+    try:
+
+        client = MongoClient(env('MONGO_URL'))
+
+        db = client["app"]
+        collection = db["users"]
+
+        userData = json.loads(request.body)
+        print(userData)
+        userLoans = list(collection.find({"accountID": userData["userID"]}, {"loans": 1}))[0]['loans']
+        friendLoans = list(collection.find({"accountID": userData["friendID"]}, {"loans": 1}))[0]['loans']
+
+        print(userLoans)
+        print(friendLoans)
+
+        commonLoans = []
+        diffrentLoans = []
+
+        for friendLoan in friendLoans:
+            for userLoan in userLoans:
+                if friendLoan['showID'] == userLoan['showID']:
+                    commonLoans.append(userLoan['showID'])
+                    break
+            else:
+                diffrentLoans.append(friendLoan['showID'])
+
+        return JsonResponse({"commonLoans": commonLoans, "diffrentLoans": diffrentLoans})
 
     except ConnectionError:
         return JsonResponse({"message": "Database problem!"})

@@ -29,4 +29,9 @@ export class FriendsService {
   deleteFriend(invitationData: any): Observable<Object> {
     return this.http.post(`${environment.backendUrl}/friends/deletefriend`, invitationData)
   }
+
+  compareLoansWithFriend(userData: any): Observable<Object> {
+    return this.http.post(`${environment.backendUrl}/friends/compareloanswithfriend`, userData)
+
+  }
 }
