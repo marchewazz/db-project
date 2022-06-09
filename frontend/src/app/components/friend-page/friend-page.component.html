@@ -50,18 +50,30 @@
             </div>
             <div *ngIf="showsTab=='common'"
             class="grid grid-cols-3 grid-flow-col">
-                <div *ngFor="let show of commonShows">
-                    <app-show-tile [showData]="show"></app-show-tile>
-                </div>
+                <ng-container *ngIf="!commonShows.length">
+                    <p>
+                        You don't have any common loans :(
+                    </p>
+                </ng-container>
+                <ng-container *ngIf="commonShows.length">
+                    <div *ngFor="let show of commonShows">
+                        <app-show-tile [showData]="show"></app-show-tile>
+                    </div>
+                </ng-container>
             </div>
             <div *ngIf="showsTab=='diffrent'"
             class="grid grid-cols-3 grid-flow-col">
-                <div *ngFor="let show of diffrentShows">
-                    <app-show-tile [showData]="show"></app-show-tile>
-                </div>
-            </div>
-            
-            
+                <ng-container *ngIf="!diffrentShows.length">
+                    <p>
+                        You don't have any diffrent loans :(
+                    </p>
+                </ng-container>
+                <ng-container *ngIf="diffrentShows.length">
+                    <div *ngFor="let show of diffrentShows">
+                        <app-show-tile [showData]="show"></app-show-tile>
+                    </div>
+                </ng-container> 
+            </div>            
         </div>
     </div>
 </div>
