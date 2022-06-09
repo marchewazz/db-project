@@ -36,7 +36,32 @@
             You need to be friends to compare your loans
         </span>
         <div *ngIf="isUserFriend">
-            Here's gonna be smth
+            <div class="grid grid-flow-col">
+                <button (click)="showsTab='common'"
+                [ngClass]="{'active-tab-style': showsTab=='common'}"
+                class="text-xl">
+                    You both like it
+                </button>
+                <button (click)="showsTab='diffrent'"
+                [ngClass]="{'active-tab-style': showsTab=='diffrent'}"
+                class="text-xl">
+                    Looking for inspiration?
+                </button>
+            </div>
+            <div *ngIf="showsTab=='common'"
+            class="grid grid-cols-3 grid-flow-col">
+                <div *ngFor="let show of commonShows">
+                    <app-show-tile [showData]="show"></app-show-tile>
+                </div>
+            </div>
+            <div *ngIf="showsTab=='diffrent'"
+            class="grid grid-cols-3 grid-flow-col">
+                <div *ngFor="let show of diffrentShows">
+                    <app-show-tile [showData]="show"></app-show-tile>
+                </div>
+            </div>
+            
+            
         </div>
     </div>
 </div>

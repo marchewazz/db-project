@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/authService/auth.service';
 import { FriendsService } from 'src/app/services/friendsService/friends.service';
+import { ShowsService } from 'src/app/services/showsService/shows.service';
 
 @Component({
   selector: 'app-friend-page',
@@ -18,7 +19,12 @@ export class FriendPageComponent implements OnInit {
   isInvitationSend: any;
   isInvitationReceived: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fs: FriendsService, private as: AuthService) { }
+  commonShows: any = [];
+  diffrentShows: any = [];
+
+  showsTab: string = "diffrent";
+
+  constructor(private route: ActivatedRoute, private router: Router, private fs: FriendsService, private as: AuthService, private ss: ShowsService) { }
 
   ngOnInit(): void {
     this.fs.getUserData(this.route.snapshot.paramMap.get('id')).subscribe((res: any) => {
@@ -39,7 +45,18 @@ export class FriendPageComponent implements OnInit {
           
           console.log(this.isInvitationSend);
           this.fs.compareLoansWithFriend({"userID": JSON.parse(res.userData).accountID, "friendID": this.userData.accountID}).subscribe((res: any) => {
-            console.log(res);
+            for (const show of res.commonLoans) {
+              this.ss.getOneShow({"showID": show}).subscribe((res: any) => {
+                this.commonShows.push(JSON.parse(res.show))
+              })
+            }
+          })
+          this.fs.compareLoansWithFriend({"userID": JSON.parse(res.userData).accountID, "friendID": this.userData.accountID}).subscribe((res: any) => {
+            for (const show of res.diffrentLoans) {
+              this.ss.getOneShow({"showID": show}).subscribe((res: any) => {
+                this.diffrentShows.push(JSON.parse(res.show))
+              })
+            }
           })
         })
       }
