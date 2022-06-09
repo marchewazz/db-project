@@ -181,9 +181,6 @@ def compareLoansWithFriend(request):
         userLoans = list(collection.find({"accountID": userData["userID"]}, {"loans": 1}))[0]['loans']
         friendLoans = list(collection.find({"accountID": userData["friendID"]}, {"loans": 1}))[0]['loans']
 
-        print(userLoans)
-        print(friendLoans)
-
         commonLoans = []
         diffrentLoans = []
 

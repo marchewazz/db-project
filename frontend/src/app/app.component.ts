@@ -20,21 +20,19 @@ export class AppComponent {
         setInterval(() => {
           this.isUserLogged = this.as.isUserLogged()
         }, 1);
-        setInterval(() => {
-          if(this.isUserLogged) {
-            this.as.getUserData().subscribe((res: any) => {
-              this.balance = JSON.parse(res.userData).balance
-            })
-          }
-        }, 1000)
+        this.as.getUserData().subscribe((res: any) => {
+          this.as.userData = JSON.parse(res.userData)
+          this.balance = JSON.parse(res.userData).balance
+        })
       }
     })
   }
 
   logout() {
-    this.redirect('/');
+    
     this.as.logout().subscribe((res: any) => {
       localStorage.setItem("token", "");
+      this.redirect('/');
       console.log(res);
     })
   }

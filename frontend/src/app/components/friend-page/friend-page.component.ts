@@ -21,37 +21,30 @@ export class FriendPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private fs: FriendsService, private as: AuthService) { }
 
   ngOnInit(): void {
-    setInterval(() => {
-      this.fs.getUserData(this.route.snapshot.paramMap.get('id')).subscribe((res: any) => {
-        this.userData = JSON.parse(res.userData)
-        if (!this.userData.accountID) this.redirect('/')
-        this.isUserLogged = this.as.isUserLogged();
-        if(this.isUserLogged) {
-          this.as.getUserData().subscribe((res: any) => {
-            console.log(JSON.parse(res.userData));
-            
-            if(JSON.parse(res.userData).accountID === this.userData.accountID) this.redirect('/myprofile')
-
-            if(JSON.parse(res.userData).friends.filter((friend: any) => friend.friendID === this.route.snapshot.paramMap.get('id')).length) this.isUserFriend = true
-            else this.isUserFriend = false
-
-            if(this.userData.invitations.filter((invitation: any) => invitation.senderID === JSON.parse(res.userData).accountID).length) this.isInvitationSend = true
-            else this.isInvitationSend = false
-
-            if(JSON.parse(res.userData).invitations.filter((invitation: any) => invitation.senderID === this.route.snapshot.paramMap.get('id')).length) this.isInvitationReceived = true
-            else this.isInvitationReceived = false
-            
-            console.log(this.isInvitationSend);
-
-            this.fs.compareLoansWithFriend({"userID": JSON.parse(res.userData).accountID, "friendID": this.userData.accountID}).subscribe((res: any) => {
-              console.log(res);
-            })
+    this.fs.getUserData(this.route.snapshot.paramMap.get('id')).subscribe((res: any) => {
+      this.userData = JSON.parse(res.userData)
+      if (!this.userData.accountID) this.redirect('/')
+      this.isUserLogged = this.as.isUserLogged();
+      if(this.isUserLogged) {
+        this.as.getUserData().subscribe((res: any) => {
+          console.log(JSON.parse(res.userData));
+          
+          if(JSON.parse(res.userData).accountID === this.userData.accountID) this.redirect('/myprofile')
+          if(JSON.parse(res.userData).friends.filter((friend: any) => friend.friendID === this.route.snapshot.paramMap.get('id')).length) this.isUserFriend = true
+          else this.isUserFriend = false
+          if(this.userData.invitations.filter((invitation: any) => invitation.senderID === JSON.parse(res.userData).accountID).length) this.isInvitationSend = true
+          else this.isInvitationSend = false
+          if(JSON.parse(res.userData).invitations.filter((invitation: any) => invitation.senderID === this.route.snapshot.paramMap.get('id')).length) this.isInvitationReceived = true
+          else this.isInvitationReceived = false
+          
+          console.log(this.isInvitationSend);
+          this.fs.compareLoansWithFriend({"userID": JSON.parse(res.userData).accountID, "friendID": this.userData.accountID}).subscribe((res: any) => {
+            console.log(res);
           })
-        }
+        })
       }
-    )}, 250)
+    })
   }
-
   sendInvitation(receiverID: string) {
     this.as.getUserData().subscribe((res: any) => {
       const invitationData = {

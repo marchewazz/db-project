@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment.prod';
 export class AuthService {
 
   isTokenValid: boolean = false;
+  userData: any;
 
   constructor(private http: HttpClient) { }
 
