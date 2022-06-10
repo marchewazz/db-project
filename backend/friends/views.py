@@ -177,7 +177,7 @@ def compareLoansWithFriend(request):
         collection = db["users"]
 
         userData = json.loads(request.body)
-        print(userData)
+        
         userLoans = list(collection.find({"accountID": userData["userID"]}, {"loans": 1}))[0]['loans']
         friendLoans = list(collection.find({"accountID": userData["friendID"]}, {"loans": 1}))[0]['loans']
 

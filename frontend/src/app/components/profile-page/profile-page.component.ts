@@ -22,7 +22,8 @@ export class ProfilePageComponent implements OnInit {
 
   loanInfo: string = "";
 
-  communityTab: string = "friends"
+  communityTab: string = "friends";
+  loansTab: string = "active";
 
   enviroment = environment;
 
@@ -71,6 +72,9 @@ export class ProfilePageComponent implements OnInit {
     }
     this.ls.extendLoan(loanData).subscribe((res: any) => {
       this.loanInfo = res.message
+      setTimeout(() => {
+        this.loanInfo = "";
+      }, 5000);
     })
   }
 

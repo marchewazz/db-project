@@ -16,4 +16,8 @@
     .active-tab-style {
         @apply bg-black text-white
     }
+    .show-button {
+        @apply rounded-full border-black border-4 bg-white text-red-700 font-extrabold ease-in
+        hover:bg-red-700 hover:text-white 
+    }
 }
