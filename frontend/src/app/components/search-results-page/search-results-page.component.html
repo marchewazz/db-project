@@ -12,7 +12,7 @@
             Users
         </button>
     </div>
-    <div>
+    <div class="grid grid-cols-3">
         <ng-container *ngIf="resultsTab=='shows'">
             <span *ngIf="!showsResults.length">
                 No shows found
@@ -29,7 +29,9 @@
             </span>
             <ng-container *ngIf="usersResults.length">
                 <div *ngFor="let user of usersResults">
-                    {{ user.accountNick }}
+                    <span (click)="redirect(createPath('/profile/', user.accountID))">
+                        {{ user.accountNick }}
+                    </span>
                 </div>
             </ng-container>
         </ng-container>

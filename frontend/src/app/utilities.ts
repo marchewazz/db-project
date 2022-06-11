@@ -18,3 +18,6 @@ export function testPasswordRegExp(password: string) : boolean{
 export function arePasswordsSame(password: string, repeatedPassword: string) : boolean{
     return true ? password === repeatedPassword : false;
 }
+// ACCOUNTTOTEST
+// test123@gmail.com/jacaZalo/Test1234
+// example@gmail.com/jakisnick12/Test1234

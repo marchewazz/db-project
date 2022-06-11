@@ -24,9 +24,15 @@ export class FriendPageComponent implements OnInit {
 
   showsTab: string = "diffrent";
 
+  friendInfo: string = "";
+
   constructor(private route: ActivatedRoute, private router: Router, private fs: FriendsService, private as: AuthService, private ss: ShowsService) { }
 
   ngOnInit(): void {
+    this.updateData();
+  }
+
+  updateData(): void {
     this.fs.getUserData(this.route.snapshot.paramMap.get('id')).subscribe((res: any) => {
       this.userData = JSON.parse(res.userData)
       if (!this.userData.accountID) this.redirect('/')
@@ -62,6 +68,7 @@ export class FriendPageComponent implements OnInit {
       }
     })
   }
+
   sendInvitation(receiverID: string) {
     this.as.getUserData().subscribe((res: any) => {
       const invitationData = {
@@ -69,7 +76,11 @@ export class FriendPageComponent implements OnInit {
         receiverID: receiverID
       }
       this.fs.sendInvitation(invitationData).subscribe((res: any) => {
-        console.log(res);
+        this.friendInfo = res.message;
+        this.updateData();
+        setTimeout(() => {
+          this.friendInfo = "";
+        }, 5000);
       })
     }) 
   }
@@ -81,7 +92,11 @@ export class FriendPageComponent implements OnInit {
         receiverID: receiverID
       }
       this.fs.cancelInvitation(invitationData).subscribe((res: any) => {
-        console.log(res);
+        this.friendInfo = res.message;
+        this.updateData();
+        setTimeout(() => {
+          this.friendInfo = "";
+        }, 5000);
       })
     }) 
   }

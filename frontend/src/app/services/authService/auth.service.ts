@@ -42,6 +42,12 @@ export class AuthService {
     return this.http.post(`${environment.backendUrl}/users/userdata`, { "token": localStorage.getItem("token") })
   }
 
+  updateUserData(): void {
+    this.getUserData().subscribe((res: any) => {
+      this.userData = JSON.parse(res.userData)
+    })
+  }
+
   isUserLogged(): boolean {
     return this.isTokenValid
   }

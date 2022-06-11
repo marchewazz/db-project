@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SearchService } from 'src/app/services/searchService/search.service';
 
@@ -17,7 +17,7 @@ export class SearchResultsPageComponent implements OnInit {
 
   resultsTab: string = "shows";
 
-  constructor(private route: ActivatedRoute, private ss: SearchService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private ss: SearchService) { }
 
   ngOnInit(): void {
     this.phrase = this.route.snapshot.paramMap.get('phrase');
@@ -28,4 +28,11 @@ export class SearchResultsPageComponent implements OnInit {
     })
   }
 
+  redirect(path: string): void{
+    this.router.navigate([path]);
+  }
+
+  createPath(path: string, param: any): string{
+    return path+param
+  }
 }
