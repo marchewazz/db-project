@@ -161,7 +161,7 @@ def deleteFriend(request):
 
                     session.commit_transaction()
 
-                    return JsonResponse({"message": "Friend added!"})
+                    return JsonResponse({"message": "Friend deleted!"})
 
     except ConnectionError:
         return JsonResponse({"message": "Database problem!"})
@@ -177,7 +177,7 @@ def compareLoansWithFriend(request):
         collection = db["users"]
 
         userData = json.loads(request.body)
-        
+
         userLoans = list(collection.find({"accountID": userData["userID"]}, {"loans": 1}))[0]['loans']
         friendLoans = list(collection.find({"accountID": userData["friendID"]}, {"loans": 1}))[0]['loans']
 

@@ -28,6 +28,13 @@
                             Invitations
                         </button>
                     </div>
+                    <div>
+                        <span class="text-center font-bold text-lg rounded-sm"
+                        [ngClass]="{'bg-white': !friendInfo, 'success-info': friendInfo!=='Database problem!', 'fail-info': friendInfo==='Database problem!', 'border-2': friendInfo!==''}"
+                        >
+                            {{ friendInfo }}
+                        </span>
+                    </div>
                 </div>
                 <ng-container *ngIf="communityTab=='friends'">
                     <ng-container *ngIf="!userData.friends.length">

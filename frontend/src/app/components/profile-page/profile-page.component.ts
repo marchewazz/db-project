@@ -21,6 +21,7 @@ export class ProfilePageComponent implements OnInit {
   earlierLoans: any = [];
 
   loanInfo: string = "";
+  friendInfo: string = "";
 
   communityTab: string = "friends";
   loansTab: string = "active";
@@ -80,13 +81,19 @@ export class ProfilePageComponent implements OnInit {
 
   answerInvitation(senderID: string, answer: string) {
     this.fs.answerInvitation({"senderID": senderID, "receiverID": this.userData.accountID, answer: answer}).subscribe((res: any) => {
-      console.log(res);
+      this.friendInfo = res.message
+      setTimeout(() => {
+        this.friendInfo = "";
+      }, 5000);
     })
   }
 
   deleteFriend(friendID: string) {
     this.fs.deleteFriend({ user1ID: this.userData.accountID, user2ID: friendID }).subscribe((res: any) => {
-      console.log(res);
+      this.friendInfo = res.message
+      setTimeout(() => {
+        this.friendInfo = "";
+      }, 5000);
     })
   }
 
