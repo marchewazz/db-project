@@ -31,6 +31,10 @@ export class ProfilePageComponent implements OnInit {
   constructor(private router: Router, private as: AuthService, private ss: ShowsService, private ls: LoansService, private fs: FriendsService) { }
 
   ngOnInit(): void {
+    this.updateData();
+  }
+
+  updateData(): void {
     this.as.getUserData().subscribe((res: any) => {
       this.userData = JSON.parse(res.userData);     
       for (let i = 0; i < this.userData.friends.length; i++) {
@@ -72,7 +76,8 @@ export class ProfilePageComponent implements OnInit {
       "accountNick": this.userData.accountNick
     }
     this.ls.extendLoan(loanData).subscribe((res: any) => {
-      this.loanInfo = res.message
+      this.loanInfo = res.message;
+      this.updateData();
       setTimeout(() => {
         this.loanInfo = "";
       }, 5000);
@@ -81,7 +86,8 @@ export class ProfilePageComponent implements OnInit {
 
   answerInvitation(senderID: string, answer: string) {
     this.fs.answerInvitation({"senderID": senderID, "receiverID": this.userData.accountID, answer: answer}).subscribe((res: any) => {
-      this.friendInfo = res.message
+      this.friendInfo = res.message;
+      this.updateData();
       setTimeout(() => {
         this.friendInfo = "";
       }, 5000);
@@ -90,7 +96,8 @@ export class ProfilePageComponent implements OnInit {
 
   deleteFriend(friendID: string) {
     this.fs.deleteFriend({ user1ID: this.userData.accountID, user2ID: friendID }).subscribe((res: any) => {
-      this.friendInfo = res.message
+      this.friendInfo = res.message;
+      this.updateData();
       setTimeout(() => {
         this.friendInfo = "";
       }, 5000);
