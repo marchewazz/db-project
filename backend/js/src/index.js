@@ -48,7 +48,6 @@ async function updateExpired() {
 
 app.listen(3000, () => {
     setInterval(() => {
-        console.log(`fsajh`);
         updateExpired()
-    }, 1000);
+    }, 60000);
 })
